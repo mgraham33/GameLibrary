@@ -16,7 +16,7 @@
 #include <cstring>
 #include <algorithm>
 
-// stroes the potential words
+// stores the potential words
 std::vector<std::string> wordList;
 
 int countLines(std::string s) {
@@ -54,6 +54,7 @@ void io_init_terminal(void) {
   curs_set(0);
   keypad(stdscr, TRUE);
   start_color();
+  // creates the color pairs
   init_pair(COLOR_RED, COLOR_RED, COLOR_BLACK);
   init_pair(COLOR_GREEN, COLOR_GREEN, COLOR_BLACK);
   init_pair(COLOR_YELLOW, COLOR_YELLOW, COLOR_BLACK);
@@ -78,10 +79,6 @@ void gameLoop() {
     std::string points = "Score: " + std::to_string(score);
     char* scoreCount = const_cast<char*>(points.c_str());
     mvprintw(1, 0, scoreCount);
-    
-    char* cheat = const_cast<char*>(currentWord.c_str());
-    mvprintw(2, 0, cheat);
-
     // prints the attempt number
     std::string attempt = "Guess " + std::to_string(guesses + 1) + ":";
     char* attemptCount = const_cast<char*>(attempt.c_str());
@@ -111,9 +108,9 @@ void gameLoop() {
     int found = 0;
     for (i = 0; i < (int) wordList.size(); i++) {
       // gets the formatted word
-      int j;
       std::string temp;
       std::string current = wordList.at(i);
+      int j;
       for (j = 0; j < (int) current.length() - 1; j++) {
 	temp += current.at(j);
       }
@@ -147,18 +144,22 @@ void gameLoop() {
       }
     }
     line++;
+    // checks of the user guessed the word correctly
     if (correct == 5) {
       score++;
       attron(COLOR_PAIR(COLOR_GREEN));
       mvprintw(line++, 0, "Correct!");
       attroff(COLOR_PAIR(COLOR_GREEN));
       line++;
+      // prompts the user to play again
       mvprintw(line++, 0, "Press any key to play again or 'Q' to quit");
       int key = getch();
       if (key == 'Q') {
+	// exits the game
 	exit = 0;
 	break;
       } else {
+	// chooses a new word and resents the terminal
 	random = rand() % countLines(s) + 1;
 	currentWord = wordList.at(random);
 	guesses = 0;
@@ -166,18 +167,22 @@ void gameLoop() {
 	clear();
       }
     } else if (guesses >= 6) {
+      // alerts the user of a loss
       std::string fail = "You ran out of guesses, the word was " + currentWord;
       char* failureMessage = const_cast<char*>(fail.c_str());
       attron(COLOR_PAIR(COLOR_RED));
       mvprintw(line++, 0, failureMessage);
       attroff(COLOR_PAIR(COLOR_RED));
       line++;
+      // prompts the user to play again
       mvprintw(line++, 0, "Press any key to play again or 'Q' to quit");
       int key = getch();
       if (key == 'Q') {
+	// exits the game
         exit = 0;
 	break;
       } else {
+	// chooses a new word and resets the terminal
 	random = rand() % countLines(s) + 1;
 	currentWord = wordList.at(random);
 	guesses = 0;
@@ -191,7 +196,9 @@ void gameLoop() {
 int main(int argc, char *argv[]) {
   io_init_terminal();
   srand(time(NULL));
+  // reads file input
   readFile();
+  // starts the game
   gameLoop();
   endwin();
   return 0;
