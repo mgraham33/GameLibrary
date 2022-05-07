@@ -1,0 +1,1 @@
+hangman.o: hangman.cpp

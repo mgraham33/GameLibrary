@@ -1,0 +1,9 @@
+	Apr 25: Started assignment 2 idea brain storming, decided on hangman and found word list
+	online
+	Apr 26: created logic for storing words and choosing a word at random; developed blank
+	space generation; started work for ncurses
+	Apr 29: implemented guessing mechanic without output; created input validation
+	Apr 30: finalized word guessing mechanics; added edge cases and exit mechanic
+	May 1: created hangman in nurses and logic to display; displayed letters used list;
+	commented; wrote README; submitted assignment 2
+	May 5: added color; added score; fixed formatting; resubmitted assignment 2

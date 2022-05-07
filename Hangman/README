@@ -1,0 +1,16 @@
+	Project Description
+For the choose your own assignment, I decided to create my own version of hangman. I found a list
+of words online and then created a program that reads in this file to a vector for use throughout.
+The program prompts the user with a set of blank spaces that correlate to the randomly chosen word.
+The user enters in letters until they use all six guesses to complete the hangman, guess the word
+correctly, or quit the game using by pressing shift and Q. The program displays the letters that
+have already been guessed and does not penalize the user for hissing the same jey twice, it instead
+informs the user of their mistake. After each round, the user is promted to play again or exit. The
+user can also exit at any time by pressing shift and Q. The program also does not allow for users
+in input anything other than lower case letters.
+
+     Known Bugs
+None
+
+	Additional Notes
+Run the program by navigating to the directiry and running "make" then "./hangman"
