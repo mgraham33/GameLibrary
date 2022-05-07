@@ -14,10 +14,10 @@
 #include <fstream>
 #include <vector>
 #include <cstring>
+#include <algorithm>
 
 // stroes the potential words
 std::vector<std::string> wordList;
-int score = 0;
 
 int countLines(std::string s) {
   // counts the number of lines in the file
@@ -80,7 +80,7 @@ void gameLoop() {
     mvprintw(1, 0, scoreCount);
     
     char* cheat = const_cast<char*>(currentWord.c_str());
-    mvprintw(2, 0 ,cheat);
+    mvprintw(2, 0, cheat);
 
     // prints the attempt number
     std::string attempt = "Guess " + std::to_string(guesses + 1) + ":";
@@ -106,6 +106,27 @@ void gameLoop() {
       if (guess.length() < currentWord.length() - 1) {
 	letter = getch();
       }
+    }
+    // checks if a valid word was entered
+    int found = 0;
+    for (i = 0; i < (int) wordList.size(); i++) {
+      // gets the formatted word
+      int j;
+      std::string temp;
+      std::string current = wordList.at(i);
+      for (j = 0; j < (int) current.length() - 1; j++) {
+	temp += current.at(j);
+      }
+      if (temp == guess) {
+	found = 1;
+      }  
+    }
+    // checks if the word was found
+    if (found == 0) {
+      line++;
+      mvprintw(line++, 0, "Error, please enter a valid word");
+      guess = "";
+      continue;
     }
     // increments the guesses
     guesses++;
