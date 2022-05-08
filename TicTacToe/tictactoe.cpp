@@ -18,10 +18,11 @@
 
 // stores the board
 char board[3][3];
-// stores the current line
+// stores the current line of the terminal
 int line = 0;
 
 void initBoard() {
+  // fills the board with placeholder integers
   int number = 1;
   int i;
   for (i = 0; i < 3; i++) {
@@ -52,6 +53,7 @@ void io_init_terminal(void) {
 
 void printBoard() {
   line++;
+  // formats the output
   std::string line1 = " " + std::to_string(board[0][0]) + " | " + std::to_string(board[0][1])
     + " | " + std::to_string(board[0][2]) + " ";
   char* row1  = const_cast<char*>(line1.c_str());
@@ -61,6 +63,7 @@ void printBoard() {
   std::string line3 = " " + std::to_string(board[2][0]) + " | " + std::to_string(board[2][1])
     + " | " + std::to_string(board[2][2]) + " ";
   char* row3  = const_cast<char*>(line3.c_str());
+  // prints the output
   mvprintw(line++, 0, "   |   |   ");
   mvprintw(line++, 0, row1);
   mvprintw(line++, 0, "   |   |   ");
@@ -121,11 +124,13 @@ void gameLoop() {
   int end = 1;
   int i = 1;
   while (end) {
+    // prints header
     mvprintw(line++, 0, "Welocme to Tic Tac Toe! Enter the location you would like to play at");
     mvprintw(line++, 0, "Press 'Q' at any time to exit");
     printBoard();
     std::string turn;
     char symbol;
+    // checks who's turn it is
     if (i % 2 == 1) {
       turn = "X's Turn:";
       symbol = 'X';
@@ -133,10 +138,12 @@ void gameLoop() {
       turn = "O's Turn:";
       symbol = 'O';
     }
+    // prints the turn
     char* prompt = const_cast<char*>(turn.c_str());
     mvprintw(line++, 0, prompt);
     int input = getch();
     int loop = 1;
+    // gets user input and assigns it if applicable
     do {
       switch (input) {
       case 'Q':
@@ -229,15 +236,19 @@ void gameLoop() {
 	input = getch();
       }
     } while (loop);
+    // checks if the game is over
     char win = checkWin();
     if (win == 'C') {
       clear();
       line = 0;
+      // prints the header
       mvprintw(line++, 0, "Welocme to Tic Tac Toe! Enter the location you would like to play at");
       mvprintw(line++, 0, "Press 'Q' at any time to exit");
       printBoard();
+      // prints the result
       mvprintw(line++, 0, "Game over, it was a tie!");
       mvprintw(line++, 0, "Press any key to play again, 'Q' to quit");
+      // prompts the user to play again
       int key = getch();
       if (key == 'Q') {
 	end = 0;
@@ -250,13 +261,16 @@ void gameLoop() {
     } else {
       clear();
       line = 0;
+      // prints the header
       mvprintw(line++, 0, "Welocme to Tic Tac Toe! Enter the location you would like to play at");
       mvprintw(line++, 0, "Press 'Q' at any time to exit");
       printBoard();
+      // prints the result
       std::string winStr = "Game over, " + std::to_string(win) + "'s win!";
       char* winMessage = const_cast<char*>(winStr.c_str());
       mvprintw(line++, 0, winMessage);
       mvprintw(line++, 0, "Press any key to play again, 'Q' to quit");
+      // prompts the user to play again
       int key = getch();
       if (key == 'Q') {
 	end = 0;
@@ -264,6 +278,7 @@ void gameLoop() {
 	initBoard();
       }
     }
+    // resets the terminal
     clear();
     line = 0;
   }
