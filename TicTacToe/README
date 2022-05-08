@@ -1,0 +1,10 @@
+	Project Description
+This project is a simple take on the classic game of tic tac toe. This game allows two players to
+play together, one as X's and one as O's. Once a player gets three of their symbol in a row, they
+win.
+
+     Known Bugs
+None
+
+	Additional Notes
+Navigate to the directiry, run make, run ./tictactoe to play
