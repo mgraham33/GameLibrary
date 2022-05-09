@@ -20,6 +20,9 @@
 char board[3][3];
 // stores the current line of the terminal
 int line = 0;
+// stores each side's score
+int xScore = 0;
+int oScore = 0;
 
 void initBoard() {
   // fills the board with placeholder integers
@@ -150,6 +153,14 @@ void gameLoop() {
     // prints header
     mvprintw(line++, 0, "Welocme to Tic Tac Toe! Enter the location you would like to play at");
     mvprintw(line++, 0, "Press 'Q' at any time to exit");
+    line++;
+    std::string x = "X's wins: " + std::to_string(xScore);
+    char* xWins = const_cast<char*>(x.c_str());
+    mvprintw(line++, 0, xWins);
+    std::string o = "O's wins: " + std::to_string(oScore);
+    char* oWins = const_cast<char*>(o.c_str());
+    mvprintw(line++, 0, oWins);
+    line++;
     printBoard();
     std::string turn;
     char symbol;
@@ -267,6 +278,10 @@ void gameLoop() {
       // prints the header
       mvprintw(line++, 0, "Welocme to Tic Tac Toe! Enter the location you would like to play at");
       mvprintw(line++, 0, "Press 'Q' at any time to exit");
+      line++;
+      mvprintw(line++, 0, xWins);
+      mvprintw(line++, 0, oWins);
+      line++;
       printBoard();
       // prints the result
       mvprintw(line++, 0, "Game over, it was a tie!");
@@ -287,6 +302,10 @@ void gameLoop() {
       // prints the header
       mvprintw(line++, 0, "Welocme to Tic Tac Toe! Enter the location you would like to play at");
       mvprintw(line++, 0, "Press 'Q' at any time to exit");
+      line++;
+      mvprintw(line++, 0, xWins);
+      mvprintw(line++, 0, oWins);
+      line++;
       printBoard();
       // prints the result
       std::string winStr = "Game over, " + std::to_string(win) + "'s win!";
@@ -294,9 +313,11 @@ void gameLoop() {
       for (i = 0; i < (int) winStr.length() - 1; i++) {
 	if (winStr[i] == '8' && winStr[i + 1] == '8') {
 	  winStr[i] = 'X';
+	  xScore++;
 	  winStr.erase(i + 1, 1);
 	} else if (winStr[i] == '7' && winStr[i + 1] == '9') {
 	  winStr[i] = 'O';
+	  oScore++;
 	  winStr.erase(i + 1, 1);
 	}
       }
