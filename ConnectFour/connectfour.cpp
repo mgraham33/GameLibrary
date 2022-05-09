@@ -111,8 +111,65 @@ public:
 
   int checkWin() {
     // returns 1 for red, 0 for yellow, 2 for tie, -1 for game unfinished
-    // TODO
-    return -1;
+    int empty = 0;
+    int i;
+    for (i = 0; i < 6; i++) {
+      int j;
+      for (j = 0; j < 15; j++) {
+	// checks if the board still has empty spaces
+	if (rows[i][j] == ' ') {
+	  empty++;
+	}
+      }
+    }
+    if (empty == 0) {
+      // game is a tie
+      return 2;
+    }
+    int color = -1;
+    int row;
+    // checks if either player wins based on the rows
+    for (row = 0; row < 6; row++) {
+      if (rows[row][1] != ' ' && rows[row][1] == rows[row][3] && rows[row][1] == rows[row][5]
+	  && rows[row][1] == rows[row][7]) {
+	if (rows[row][1] == '0') {
+	  color = 0;
+	} else {
+	  color = 1;
+	}
+      } else if (rows[row][3] != ' ' && rows[row][3] == rows[row][5]
+		 && rows[row][3] == rows[row][7] && rows[row][3] == rows[row][9]) {
+	if (rows[row][3] == '0') {
+	  color = 0;
+	} else {
+	  color = 1;
+	}
+      } else if (rows[row][5] != ' ' && rows[row][5] == rows[row][7]
+		 && rows[row][5] == rows[row][9] && rows[row][5] == rows[row][11]) {
+	if (rows[row][5] == '0') {
+	  color = 0;
+	} else {
+	  color = 1;
+	}
+      } else if (rows[row][7] != ' ' && rows[row][7] == rows[row][9]
+		 && rows[row][7] == rows[row][11] && rows[row][7] == rows[row][13]) {
+	if (rows[row][7] == '0') {
+	  color = 0;
+	} else {
+	  color = 1;
+	}
+      }
+    }
+    if (color == 1) {
+      // red wins
+      return 1;
+    } else if (color == 0) {
+      // yellow wins
+      return 0;
+    } else {
+      // game continues
+      return -1;
+    }
   }
 
   void reset() {
@@ -153,10 +210,10 @@ void gameLoop() {
     // checks who's turn it is
     if (i % 2 == 1) {
       turn = "Red's Turn:";
-      symbol = '0';
+      symbol = 'O';
     } else {
       turn = "Yellow's Turn:";
-      symbol = 'O';
+      symbol = '0';
     }
     char* prompt = const_cast<char*>(turn.c_str());
     mvprintw(line++, 0, prompt);
@@ -234,6 +291,9 @@ void gameLoop() {
 	key = getch();
       }
     } while (loop);
+    clear();
+    line = 0;
+    gameBoard.printBoard();
     int win = gameBoard.checkWin();
     if (win == 1) {
       // red wins
@@ -264,7 +324,7 @@ void gameLoop() {
 	clear();
       }
     } else if (win == 2) {
-      // tie
+      // tie occurs
       mvprintw(line++, 0, "It's a tie! Press any key to play again or 'Q' to exit");
       int playAgain = getch();
       // prompts to play again
