@@ -25,7 +25,7 @@ public:
   // stores the board rows
   std::string rows[6] = {"| | | | | | | |", "| | | | | | | |", "| | | | | | | |",
 			 "| | | | | | | |", "| | | | | | | |", "| | | | | | | |"};
-
+  
   int addPiece(int col, char symbol) {
     // converts the column to sthe index of the string
     switch (col) {
@@ -75,9 +75,38 @@ public:
     mvprintw(line++, 0, "Welcome to connect four! Choose a column to place your piece");
     mvprintw(line++, 0, "Press 'Q' at any point to exit");
     line++;
-    mvprintw(line++, 0, " 1 2 3 4 5 6 7");
+    mvprintw(line++, 0, " 1 2 3 4 5 6 7");  
     // prints the board
-    char* r1 = const_cast<char*>(rows[0].c_str());
+    int i;
+    int row = 0;
+    for (i = 1; i < 13; i++) {
+      if (i % 2 == 1) {
+	// prints the rows
+	int j;
+	int y = line;
+	for (j = 0; j < 15; j++) {
+	  // prints pieces according to their color
+	  if (rows[row].at(j) == 'O') {
+	    attron(COLOR_PAIR(COLOR_RED));
+	    mvaddch(y, j, rows[row][j]);
+	    attroff(COLOR_PAIR(COLOR_RED));
+	  } else if (rows[row].at(j) == '0') {
+	    attron(COLOR_PAIR(COLOR_YELLOW));
+	    mvaddch(y, j, rows[row][j]);
+	    attroff(COLOR_PAIR(COLOR_YELLOW));
+	  } else {
+	    mvaddch(y, j, rows[row][j]);
+	  }
+	}
+	y++;
+	line++;
+	row++;
+      } else {
+	// prints the border
+        mvprintw(line++, 0, "+-+-+-+-+-+-+-+");
+      }
+    }
+    /*char* r1 = const_cast<char*>(rows[0].c_str());
     mvprintw(line++, 0, r1);
     mvprintw(line++, 0, "+-+-+-+-+-+-+-+");
     char* r2 = const_cast<char*>(rows[1].c_str());
@@ -93,8 +122,9 @@ public:
     mvprintw(line++, 0, r5);
     mvprintw(line++, 0, "+-+-+-+-+-+-+-+");
     char* r6 = const_cast<char*>(rows[5].c_str());
-    mvprintw(line++, 0, r6);
+    mvprintw(line++, 0, r1);
     mvprintw(line++, 0, "+-+-+-+-+-+-+-+");
+    */
     line++;
   }
 };
