@@ -106,26 +106,25 @@ public:
         mvprintw(line++, 0, "+-+-+-+-+-+-+-+");
       }
     }
-    /*char* r1 = const_cast<char*>(rows[0].c_str());
-    mvprintw(line++, 0, r1);
-    mvprintw(line++, 0, "+-+-+-+-+-+-+-+");
-    char* r2 = const_cast<char*>(rows[1].c_str());
-    mvprintw(line++, 0, r2);
-    mvprintw(line++, 0, "+-+-+-+-+-+-+-+");
-    char* r3 = const_cast<char*>(rows[2].c_str());
-    mvprintw(line++, 0, r3);
-    mvprintw(line++, 0, "+-+-+-+-+-+-+-+");
-    char* r4 = const_cast<char*>(rows[3].c_str());
-    mvprintw(line++, 0, r4);
-    mvprintw(line++, 0, "+-+-+-+-+-+-+-+");
-    char* r5 = const_cast<char*>(rows[4].c_str());
-    mvprintw(line++, 0, r5);
-    mvprintw(line++, 0, "+-+-+-+-+-+-+-+");
-    char* r6 = const_cast<char*>(rows[5].c_str());
-    mvprintw(line++, 0, r1);
-    mvprintw(line++, 0, "+-+-+-+-+-+-+-+");
-    */
     line++;
+  }
+
+  int checkWin() {
+    // returns 1 for red, 0 for yellow, 2 for tie, -1 for game unfinished
+    // TODO
+    return -1;
+  }
+
+  void reset() {
+    int i;
+    for (i = 0; i < 6; i++) {
+      int j;
+      for (j = 0; j < 15; j++) {
+	if (rows[i][j] == '0' || rows[i][j] == 'O') {
+	  rows[i][j] = ' ';
+	}
+      }
+    }
   }
 };
 
@@ -235,9 +234,55 @@ void gameLoop() {
 	key = getch();
       }
     } while (loop);
-    i++;
-    clear();
-    line = 0;
+    int win = gameBoard.checkWin();
+    if (win == 1) {
+      // red wins
+      mvprintw(line++, 0, "Red wins! Press any key to play again or 'Q' to exit");
+      int playAgain = getch();
+      // prompts to play again
+      if (playAgain == 'Q') {
+	end = 0;
+      } else {
+	// resets the game
+	gameBoard.reset();
+	i = 1;
+	line = 0;
+	clear();
+      }
+    } else if (win == 0) {
+      // yellow wins
+      mvprintw(line++, 0, "Yellow wins! Press any key to play again or 'Q' to exit");
+      int playAgain = getch();
+      // prompts to play again
+      if (playAgain == 'Q') {
+	end = 0;
+      } else {
+	// resets the game
+	gameBoard.reset();
+	i = 1;
+	line = 0;
+	clear();
+      }
+    } else if (win == 2) {
+      // tie
+      mvprintw(line++, 0, "It's a tie! Press any key to play again or 'Q' to exit");
+      int playAgain = getch();
+      // prompts to play again
+      if (playAgain == 'Q') {
+	end = 0;
+      } else {
+	// resets the game
+	gameBoard.reset();
+	i = 1;
+	line = 0;
+	clear();
+      }
+    } else {
+      // game continues
+      i++;
+      clear();
+      line = 0;
+    }
   }
 }
 
