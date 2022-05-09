@@ -56,12 +56,43 @@ void printBoard() {
   // formats the output
   std::string line1 = " " + std::to_string(board[0][0]) + " | " + std::to_string(board[0][1])
     + " | " + std::to_string(board[0][2]) + " ";
+  int i;
+  // replaces ASCII values with correct character
+  for (i = 0; i < (int) line1.length() - 1; i++) {
+    if (line1[i] == '8' && line1[i + 1] == '8') {
+      line1[i] = 'X';
+      line1.erase(i + 1, 1);
+    } else if (line1[i] == '7' && line1[i + 1] == '9') {
+      line1[i] = 'O';
+      line1.erase(i + 1, 1);
+    }
+  }
   char* row1  = const_cast<char*>(line1.c_str());
   std::string line2 = " " + std::to_string(board[1][0]) + " | " + std::to_string(board[1][1])
     + " | " + std::to_string(board[1][2]) + " ";
+  // replaces ASCII values with correct character
+  for (i = 0; i < (int) line2.length() - 1; i++) {
+    if (line2[i] == '8' && line2[i + 1] == '8') {
+      line2[i] = 'X';
+      line2.erase(i + 1, 1);
+    } else if (line2[i] == '7' && line2[i + 1] == '9') {
+      line2[i] = 'O';
+      line2.erase(i + 1, 1);
+    }
+  }
   char* row2  = const_cast<char*>(line2.c_str());
   std::string line3 = " " + std::to_string(board[2][0]) + " | " + std::to_string(board[2][1])
     + " | " + std::to_string(board[2][2]) + " ";
+  // replaces ASCII values with correct character
+  for (i = 0; i < (int) line3.length() - 1; i++) {
+    if (line3[i] == '8' && line3[i + 1] == '8') {
+      line3[i] = 'X';
+      line3.erase(i + 1, 1);
+    } else if (line3[i] == '7' && line3[i + 1] == '9') {
+      line3[i] = 'O';
+      line3.erase(i + 1, 1);
+    }
+  }
   char* row3  = const_cast<char*>(line3.c_str());
   // prints the output
   mvprintw(line++, 0, "   |   |   ");
@@ -267,6 +298,16 @@ void gameLoop() {
       printBoard();
       // prints the result
       std::string winStr = "Game over, " + std::to_string(win) + "'s win!";
+      // replaces ASCII values with correct character
+      for (i = 0; i < (int) winStr.length() - 1; i++) {
+	if (winStr[i] == '8' && winStr[i + 1] == '8') {
+	  winStr[i] = 'X';
+	  winStr.erase(i + 1, 1);
+	} else if (winStr[i] == '7' && winStr[i + 1] == '9') {
+	  winStr[i] = 'O';
+	  winStr.erase(i + 1, 1);
+	}
+      }
       char* winMessage = const_cast<char*>(winStr.c_str());
       mvprintw(line++, 0, winMessage);
       mvprintw(line++, 0, "Press any key to play again, 'Q' to quit");

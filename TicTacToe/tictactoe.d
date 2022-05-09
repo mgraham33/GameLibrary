@@ -1,1 +1,0 @@
-tictactoe.o: tictactoe.cpp
