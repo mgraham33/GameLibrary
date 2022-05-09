@@ -160,6 +160,32 @@ public:
 	}
       }
     }
+    // checks if either player wins based on the columns
+    int col;
+    for (col = 1; col < 15; col += 2) {
+      if (rows[0][col] != ' ' && rows[0][col] == rows[1][col] && rows[0][col] == rows[2][col]
+	  && rows[0][col] == rows[3][col]) {
+	if (rows[0][col] == '0') {
+	  color = 0;
+	} else {
+	  color = 1;
+	}
+      } else if (rows[1][col] != ' ' && rows[1][col] == rows[2][col]
+		 && rows[1][col] == rows[3][col] && rows[1][col] == rows[4][col]) {
+	if (rows[0][col] == '0') {
+	  color = 0;
+	} else {
+	  color = 1;
+	}
+      } else if (rows[2][col] != ' ' && rows[2][col] == rows[3][col]
+		 && rows[2][col] == rows[4][col] && rows[2][col] == rows[5][col]) {
+	if (rows[0][col] == '0') {
+	  color = 0;
+	} else {
+	  color = 1;
+	}
+      }
+    }
     if (color == 1) {
       // red wins
       return 1;
