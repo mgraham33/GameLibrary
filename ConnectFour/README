@@ -1,0 +1,10 @@
+	Project Description
+This project is a simple take on the classic game of connect four. One player is red and the other
+is yellow. Each player takes turns placing their pieces until one player gets four in a row or the
+game board is filled.
+
+     Known Bugs
+None
+
+	Additional Notes
+Navigate to the directory, run make, run ./connectfour to play
