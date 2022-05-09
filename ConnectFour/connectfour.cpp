@@ -18,6 +18,9 @@
 
 // stores the current terminal line
 int line = 0;
+// stores each color's score
+int redScore = 0;
+int yellowScore = 0;
 
 // stores the board
 class ConnectFour {
@@ -74,6 +77,13 @@ public:
     // prints the header
     mvprintw(line++, 0, "Welcome to connect four! Choose a column to place your piece");
     mvprintw(line++, 0, "Press 'Q' at any point to exit");
+    line++;
+    std::string redWins = "Red wins: " + std::to_string(redScore);
+    char* red = const_cast<char*>(redWins.c_str());
+    std::string yellowWins = "Yellow wins: " + std::to_string(yellowScore);
+    char* yellow = const_cast<char*>(yellowWins.c_str());
+    mvprintw(line++, 0, red);
+    mvprintw(line++, 0, yellow);
     line++;
     mvprintw(line++, 0, " 1 2 3 4 5 6 7");  
     // prints the board
@@ -439,6 +449,7 @@ void gameLoop() {
     int win = gameBoard.checkWin();
     if (win == 1) {
       // red wins
+      redScore++;
       mvprintw(line++, 0, "Red wins! Press any key to play again or 'Q' to exit");
       int playAgain = getch();
       // prompts to play again
@@ -453,6 +464,7 @@ void gameLoop() {
       }
     } else if (win == 0) {
       // yellow wins
+      yellowScore++;
       mvprintw(line++, 0, "Yellow wins! Press any key to play again or 'Q' to exit");
       int playAgain = getch();
       // prompts to play again
