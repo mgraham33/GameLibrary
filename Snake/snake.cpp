@@ -32,8 +32,6 @@ typedef enum {
 	      DOWN
 } dir;
 
-// stores the snake length
-int length = 0;
 // stores the score
 int score = 0;
 // stores the food location
@@ -152,16 +150,36 @@ void gameLoop() {
   }
 }
 
+void reset() {
+  // resets the game
+  score = 0;
+  curr = RIGHT;
+  snake.clear();
+}
+
 int main(int argc, char *argv[]) {
   srand(time(NULL));
   io_init_terminal();
   // starts the game
   gameLoop();
   clear();
-  std::string scorePrint = "Score: " + score;
+  // prints the results
+  std::string scorePrint = "Score: " + std::to_string(score);;
   char* scoreOut  = const_cast<char*>(scorePrint.c_str());
-  mvprintw(1, 0, "Game Over");
-  getch();
+  mvprintw(1, MAX_X / 4, "Game Over");
+  mvprintw(3, MAX_X / 4, scoreOut);
+  mvprintw(5, MAX_X / 4, "Press any key to play again, 'Q' to quit");
+  int key = getch();
+  // checks for play again
+  if (key != 'Q') {
+    reset();
+    gameLoop();
+    scorePrint = "Score: " + std::to_string(score);;
+    scoreOut  = const_cast<char*>(scorePrint.c_str());
+    mvprintw(1, MAX_X / 4, "Game Over");
+    mvprintw(3, MAX_X / 4, scoreOut);
+    mvprintw(5, MAX_X / 4, "Press any key to play again, 'Q' to quit");
+  }
   endwin();
   return 0;
 }
