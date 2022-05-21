@@ -182,6 +182,7 @@ int main(int argc, char *argv[]) {
   // checks for play again
   while (key != 'Q') {
     reset();
+    clear();
     gameLoop();
     scorePrint = "Score: " + std::to_string(score);;
     scoreOut  = const_cast<char*>(scorePrint.c_str());
