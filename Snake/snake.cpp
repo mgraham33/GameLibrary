@@ -68,6 +68,17 @@ void randomFood() {
   mvaddch(food.y, food.x, 'x');
 }
 
+void moveSnake() {
+  // moves the snake with the head
+  point end = snake.at((int) snake.size() - 1);
+  int i;
+  for(i = (int) snake.size() - 1; i > 0; i--) {
+    snake.at(i) = snake.at(i - 1);;
+  }
+  
+  snake.at(0) = end;
+}
+
 void gameLoop() {
   // sets the snake's head
   point head;
@@ -107,12 +118,14 @@ void gameLoop() {
     }
 
     if (snake.at(0).x == food.x && snake.at(0).y == food.y) {
-      // checks of you collect food and creates new food
+      // checks of you collect
       score++;
+      // adds length to the snake
       point addToSnake;
       addToSnake.x = snake.at(0).x;
       addToSnake.y = snake.at(0).y;
       snake.push_back(addToSnake);
+      // creates new food
       randomFood();
     } else {
       int i;
@@ -122,8 +135,13 @@ void gameLoop() {
 	  return;
 	}
       }
+      // resets the head
+      snake.at((int) snake.size() - 1).x = snake.at(0).x;
+      snake.at((int) snake.size() - 1).y = snake.at(0).y;
     }
 
+    moveSnake();
+    
     // checks if you hit the wall
     if (snake.at(0).x >= MAX_X || snake.at(0).x < 0 || snake.at(0).y >= MAX_Y
 	|| snake.at(0).y < 0) {
@@ -139,6 +157,11 @@ int main(int argc, char *argv[]) {
   io_init_terminal();
   // starts the game
   gameLoop();
+  clear();
+  std::string scorePrint = "Score: " + score;
+  char* scoreOut  = const_cast<char*>(scorePrint.c_str());
+  mvprintw(1, 0, "Game Over");
+  getch();
   endwin();
   return 0;
 }
