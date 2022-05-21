@@ -1,0 +1,10 @@
+	Project Description
+This project is a version of the well-known game of snake. The user uses the arrow keys to move
+the snake around the screen. If the user hits the border or their own tail, the game ends. When
+the user collects food, the snake grows in length.
+
+     Known Bugs
+None
+
+	Additional Notes
+Navigate to the directory, run make, run ./snake to play
