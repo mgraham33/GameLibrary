@@ -34,6 +34,7 @@ typedef enum {
 
 // stores the score
 int score = 0;
+int highScore = 0;
 // stores the food location
 point food;
 // stores the current direction
@@ -147,6 +148,11 @@ void gameLoop() {
     }
 
     printBoard();
+
+    // checks if a new high score was reached
+    if (score > highScore) {
+      highScore = score;
+    }
   }
 }
 
@@ -166,19 +172,26 @@ int main(int argc, char *argv[]) {
   // prints the results
   std::string scorePrint = "Score: " + std::to_string(score);;
   char* scoreOut  = const_cast<char*>(scorePrint.c_str());
+  std::string highScorePrint = "High Score: " + std::to_string(highScore);;
+  char* highScoreOut  = const_cast<char*>(highScorePrint.c_str());
   mvprintw(1, MAX_X / 4, "Game Over");
   mvprintw(3, MAX_X / 4, scoreOut);
-  mvprintw(5, MAX_X / 4, "Press any key to play again, 'Q' to quit");
+  mvprintw(5, MAX_X / 4, highScoreOut);
+  mvprintw(7, MAX_X / 4, "Press any key to play again, 'Q' to quit");
   int key = getch();
   // checks for play again
-  if (key != 'Q') {
+  while (key != 'Q') {
     reset();
     gameLoop();
     scorePrint = "Score: " + std::to_string(score);;
     scoreOut  = const_cast<char*>(scorePrint.c_str());
+    highScorePrint = "High Score: " + std::to_string(highScore);;
+    highScoreOut  = const_cast<char*>(highScorePrint.c_str());
     mvprintw(1, MAX_X / 4, "Game Over");
     mvprintw(3, MAX_X / 4, scoreOut);
-    mvprintw(5, MAX_X / 4, "Press any key to play again, 'Q' to quit");
+    mvprintw(5, MAX_X / 4, highScoreOut);
+    mvprintw(7, MAX_X / 4, "Press any key to play again, 'Q' to quit");
+    key = getch();
   }
   endwin();
   return 0;
