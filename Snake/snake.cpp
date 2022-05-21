@@ -53,6 +53,8 @@ void io_init_terminal(void) {
 }
 
 void printBoard() {
+  clear();
+  mvaddch(food.y, food.x, 'x');
   int i;
   for (i = 0; i < (int) snake.size(); i++) {
     mvaddch(snake.at(i).y, snake.at(i).x, 'o');
@@ -73,10 +75,10 @@ void gameLoop() {
   head.y = MAX_Y / 2;
   snake.push_back(head);
 
+  randomFood();
   printBoard();
   int key;
   int loop = 1;
-  randomFood();
   while (loop) {
     key = getch();
     // checks for change in direction
@@ -93,41 +95,38 @@ void gameLoop() {
       return;
     }
 
-    // stores the snake's head
-    int x = snake.at(0).x;
-    int y = snake.at(0).y;
-
     // moves in the appropriate direction
     if (curr == LEFT) {
-      x--;
+      snake.at(0).x--;
     } else if (curr == RIGHT) {
-      x++;
+      snake.at(0).x++;
     } else if (curr == UP) {
-      y--;
+      snake.at(0).y--;
     } else if (curr == DOWN) {
-      y++;
+      snake.at(0).y++;
     }
 
-    if (x == food.x && y == food.y) {
+    if (snake.at(0).x == food.x && snake.at(0).y == food.y) {
       // checks of you collect food and creates new food
       score++;
       point addToSnake;
-      addToSnake.x = x;
-      addToSnake.y = y;
+      addToSnake.x = snake.at(0).x;
+      addToSnake.y = snake.at(0).y;
       snake.push_back(addToSnake);
       randomFood();
     } else {
       int i;
-      for (i = 0; i < (int) snake.size(); i++) {
+      for (i = 1; i < (int) snake.size(); i++) {
 	// checks if you hit your own tail and ends the game
-	if (x == snake.at(i).x && y == snake.at(i).y) {
+	if (snake.at(0).x == snake.at(i).x && snake.at(0).y == snake.at(i).y) {
 	  return;
 	}
       }
     }
 
     // checks if you hit the wall
-    if (x >= MAX_X || x < 0 || y >= MAX_Y || y < 0) {
+    if (snake.at(0).x >= MAX_X || snake.at(0).x < 0 || snake.at(0).y >= MAX_Y
+	|| snake.at(0).y < 0) {
       return;
     }
 
